@@ -12,9 +12,13 @@ import Portfolio from './components/Portfolio.tsx';
 import Staff from './components/Staff.tsx';
 import Newsletter from './components/Newsletter.tsx';
 import Footer from './components/Footer.tsx';
+import EnrollModal from './components/EnrollModal.tsx';
+import WhatsAppFloat from './components/WhatsAppFloat.tsx';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { useState } from 'react';
 
 export default function App() {
+  const [isEnrollOpen, setIsEnrollOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -30,12 +34,12 @@ export default function App() {
         style={{ scaleX }}
       />
 
-      <Navbar />
+      <Navbar onEnrollClick={() => setIsEnrollOpen(true)} />
       
       <main>
         <Hero />
         <Features />
-        <About />
+        <About onEnrollClick={() => setIsEnrollOpen(true)} />
         <Courses />
         <Portfolio />
         <Staff />
@@ -43,6 +47,9 @@ export default function App() {
       </main>
 
       <Footer />
+
+      <EnrollModal open={isEnrollOpen} onClose={() => setIsEnrollOpen(false)} />
+      <WhatsAppFloat />
     </div>
   );
 }

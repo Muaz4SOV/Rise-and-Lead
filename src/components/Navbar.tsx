@@ -4,9 +4,14 @@ import { Menu, X, BookOpen } from 'lucide-react';
 import { cn } from '../lib/utils';
 import BrandName from './BrandName';
 
-export default function Navbar() {
+export default function Navbar({ onEnrollClick }: { onEnrollClick: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const openEnroll = () => {
+    setIsMobileMenuOpen(false);
+    onEnrollClick();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,9 +66,11 @@ export default function Navbar() {
             </motion.a>
           ))}
           <motion.button
+            type="button"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 0.5 }}
+            onClick={openEnroll}
             className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all active:scale-95 shadow-lg shadow-black/5"
           >
             Enroll Now
@@ -99,7 +106,11 @@ export default function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <button className="bg-black text-white px-6 py-3 rounded-xl text-center font-medium">
+              <button
+                type="button"
+                onClick={openEnroll}
+                className="bg-black text-white px-6 py-3 rounded-xl text-center font-medium"
+              >
                 Enroll Now
               </button>
             </div>

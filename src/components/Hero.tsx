@@ -52,9 +52,12 @@ export default function Hero() {
               Start Your Journey
               <ArrowRight className="w-4 h-4" />
             </button>
-            <button className="px-7 py-3.5 rounded-full text-sm font-semibold text-gray-700 border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-colors">
+            <a
+              href="#courses"
+              className="px-7 py-3.5 rounded-full text-sm font-semibold text-gray-700 border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+            >
               Explore Programs
-            </button>
+            </a>
           </motion.div>
         </div>
 

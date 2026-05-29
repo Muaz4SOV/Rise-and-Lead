@@ -25,7 +25,7 @@ const values = [
   }
 ];
 
-export default function About() {
+export default function About({ onEnrollClick }: { onEnrollClick: () => void }) {
   return (
     <section id="about" className="py-32 px-6 bg-[#0a0a0a] text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none" />
@@ -131,7 +131,11 @@ export default function About() {
               Join the next cohort and turn your potential into a thriving tech career.
             </p>
           </div>
-          <button className="group bg-black text-white px-10 py-5 rounded-[2rem] font-bold flex items-center gap-3 hover:bg-gray-800 transition-all active:scale-95 shadow-xl shadow-black/10 shrink-0">
+          <button
+            type="button"
+            onClick={onEnrollClick}
+            className="group bg-black text-white px-10 py-5 rounded-[2rem] font-bold flex items-center gap-3 hover:bg-gray-800 transition-all active:scale-95 shadow-xl shadow-black/10 shrink-0"
+          >
             Apply for Admission
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
