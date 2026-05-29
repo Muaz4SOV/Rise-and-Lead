@@ -31,8 +31,10 @@ export default function Navbar({ onEnrollClick }: { onEnrollClick: () => void })
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
-        isScrolled ? "bg-white/80 backdrop-blur-md border-bottom border-gray-100 py-3 shadow-sm" : "bg-transparent"
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 py-3 sm:py-4',
+        isScrolled
+          ? 'bg-white/90 backdrop-blur-md border-bottom border-gray-100 shadow-sm'
+          : 'bg-white/90 backdrop-blur-md md:bg-transparent md:backdrop-blur-none'
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -44,7 +46,7 @@ export default function Navbar({ onEnrollClick }: { onEnrollClick: () => void })
           <div className="bg-black p-2 rounded-lg">
             <BookOpen className="w-5 h-5 text-white" />
           </div>
-          <BrandName className="text-xl text-black" />
+          <BrandName className="text-base sm:text-xl text-black" />
         </motion.div>
 
         {/* Desktop Nav */}

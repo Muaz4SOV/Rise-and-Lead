@@ -14,6 +14,7 @@ import {
 import { STAFF } from '../data/staff.ts';
 import type { Staff as StaffMember } from '../types.ts';
 import { cn } from '../lib/utils';
+import SectionHeader from './SectionHeader.tsx';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -22,10 +23,12 @@ const cardActionBase =
 
 function StaffLinkedInLink({
   url,
-  variant = 'card'
+  variant = 'card',
+  className
 }: {
   url: string;
   variant?: 'card' | 'modal';
+  className?: string;
 }) {
   if (variant === 'modal') {
     return (
@@ -35,7 +38,8 @@ function StaffLinkedInLink({
         rel="noopener noreferrer"
         className={cn(
           cardActionBase,
-          'bg-[#0A66C2]/10 text-[#0A66C2] ring-1 ring-[#0A66C2]/20 hover:bg-[#0A66C2] hover:text-white hover:ring-[#0A66C2]'
+          'bg-[#0A66C2]/10 text-[#0A66C2] ring-1 ring-[#0A66C2]/20 hover:bg-[#0A66C2] hover:text-white hover:ring-[#0A66C2]',
+          className
         )}
       >
         <Linkedin className="w-4 h-4 shrink-0" />
@@ -51,7 +55,8 @@ function StaffLinkedInLink({
       rel="noopener noreferrer"
       className={cn(
         cardActionBase,
-        'bg-[#0A66C2]/8 text-[#0A66C2] ring-1 ring-[#0A66C2]/15 hover:bg-[#0A66C2] hover:text-white hover:ring-[#0A66C2] shadow-sm'
+        'bg-[#0A66C2]/8 text-[#0A66C2] ring-1 ring-[#0A66C2]/15 hover:bg-[#0A66C2] hover:text-white hover:ring-[#0A66C2] shadow-sm',
+        className
       )}
     >
       <Linkedin className="w-4 h-4 shrink-0" />
@@ -60,14 +65,21 @@ function StaffLinkedInLink({
   );
 }
 
-function StaffViewProfileButton({ onClick }: { onClick: () => void }) {
+function StaffViewProfileButton({
+  onClick,
+  compact = false
+}: {
+  onClick: () => void;
+  compact?: boolean;
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={cn(
         cardActionBase,
-        'group/btn bg-gray-900 text-white shadow-sm hover:bg-orange-600 hover:shadow-md'
+        'group/btn bg-gray-900 text-white shadow-sm hover:bg-orange-600 hover:shadow-md',
+        compact && 'py-2.5 text-xs rounded-lg'
       )}
     >
       View Profile
@@ -79,18 +91,35 @@ function StaffViewProfileButton({ onClick }: { onClick: () => void }) {
 function StaffCardActions({
   linkedin,
   showViewProfile,
-  onViewProfile
+  onViewProfile,
+  compact = false
 }: {
   linkedin?: string;
   showViewProfile: boolean;
   onViewProfile: () => void;
+  compact?: boolean;
 }) {
   if (!linkedin && !showViewProfile) return null;
 
   return (
-    <div className="flex flex-col gap-2.5 pt-3 mt-auto border-t border-gray-100">
-      {linkedin && <StaffLinkedInLink url={linkedin} variant="card" />}
-      {showViewProfile && <StaffViewProfileButton onClick={onViewProfile} />}
+    <div
+      className={cn(
+        compact ? 'mt-0 pt-0' : 'pt-3 mt-auto border-t border-gray-100',
+        compact && linkedin && showViewProfile && 'grid grid-cols-2 gap-2',
+        compact && !(linkedin && showViewProfile) && 'flex flex-col gap-2',
+        !compact && 'flex flex-col gap-2.5'
+      )}
+    >
+      {linkedin && (
+        <StaffLinkedInLink
+          url={linkedin}
+          variant="card"
+          className={compact ? 'py-2.5 text-xs rounded-lg' : undefined}
+        />
+      )}
+      {showViewProfile && (
+        <StaffViewProfileButton onClick={onViewProfile} compact={compact} />
+      )}
     </div>
   );
 }
@@ -217,7 +246,7 @@ function StaffPhoto({
         'relative overflow-hidden bg-gray-100',
         isModal
           ? 'rounded-2xl ring-1 ring-gray-200/80 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)]'
-          : 'rounded-[3rem] border border-gray-100 shadow-sm group',
+          : 'group',
         className
       )}
     >
@@ -239,22 +268,50 @@ function ProfileSection({
   icon: Icon,
   title,
   children,
-  className
+  className,
+  plainOnMobile = false,
+  classic = false
 }: {
   icon: typeof GraduationCap;
   title: string;
   children: ReactNode;
   className?: string;
+  plainOnMobile?: boolean;
+  classic?: boolean;
 }) {
+  if (classic) {
+    return (
+      <section className={cn('space-y-3', className)}>
+        <div className="flex items-center gap-2">
+          <Icon className="w-4 h-4 text-orange-500 shrink-0" />
+          <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">{title}</h4>
+        </div>
+        {children}
+      </section>
+    );
+  }
+
   return (
-    <section className={cn('space-y-3', className)}>
+    <section
+      className={cn(
+        'space-y-3',
+        plainOnMobile && 'pb-6 border-b border-gray-100 last:border-0 last:pb-0',
+        className
+      )}
+    >
       <div className="flex items-center gap-2">
-        <Icon className="w-4 h-4 text-orange-500 shrink-0" />
-        <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
-          {title}
-        </h4>
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50 border border-orange-100 shrink-0">
+          <Icon className="w-4 h-4 text-orange-500" />
+        </span>
+        <h4 className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{title}</h4>
       </div>
-      {children}
+      {plainOnMobile ? (
+        <div className="pl-10">{children}</div>
+      ) : (
+        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+          {children}
+        </div>
+      )}
     </section>
   );
 }
@@ -377,9 +434,15 @@ function FeaturedSectionImage({
   );
 }
 
-function StaffProfileSections({ sections }: { sections: NonNullable<StaffMember['sections']> }) {
+function StaffProfileSections({
+  sections,
+  classic = false
+}: {
+  sections: NonNullable<StaffMember['sections']>;
+  classic?: boolean;
+}) {
   return (
-    <div className="space-y-10">
+    <div className={cn(classic ? 'space-y-10' : 'space-y-8')}>
       {sections.map((section) => {
         const isFeaturedSingle =
           section.images?.length === 1 &&
@@ -390,10 +453,21 @@ function StaffProfileSections({ sections }: { sections: NonNullable<StaffMember[
         return (
           <section
             key={section.id}
-            className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+            className={cn(
+              classic
+                ? 'rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
+                : 'pb-8 border-b border-gray-100 last:border-0 last:pb-0'
+            )}
           >
             <div className="space-y-2 mb-4">
-              <h4 className="text-lg font-bold text-gray-900 tracking-tight">{section.title}</h4>
+              <h4
+                className={cn(
+                  'font-bold text-gray-900 tracking-tight leading-snug',
+                  classic ? 'text-lg' : 'text-base'
+                )}
+              >
+                {section.title}
+              </h4>
               {section.subtitle && (
                 <p className="text-sm font-medium text-orange-600">{section.subtitle}</p>
               )}
@@ -475,16 +549,136 @@ function StaffProfileSections({ sections }: { sections: NonNullable<StaffMember[
   );
 }
 
-function StaffProfileContent({ member }: { member: StaffMember }) {
-  if (member.sections && member.sections.length > 0) {
+function StaffProfileContent({
+  member,
+  plainOnMobile = false,
+  classic = false
+}: {
+  member: StaffMember;
+  plainOnMobile?: boolean;
+  classic?: boolean;
+}) {
+  const sectionProps = classic
+    ? { classic: true }
+    : plainOnMobile
+      ? { plainOnMobile: true }
+      : {};
+
+  if (classic) {
+    if (member.sections && member.sections.length > 0) {
+      return (
+        <div className="space-y-8 pb-2">
+          <ProfileSection icon={Sparkles} title="Profile Overview" {...sectionProps}>
+            <p className="text-[15px] text-gray-600 leading-[1.75]">{member.bio}</p>
+          </ProfileSection>
+
+          {(member.featuredHighlight || (member.highlights && member.highlights.length > 0)) && (
+            <ProfileSection icon={Trophy} title="At a Glance" {...sectionProps}>
+              <StaffHighlightsList
+                featuredHighlight={member.featuredHighlight}
+                highlights={member.highlights}
+              />
+            </ProfileSection>
+          )}
+
+          <StaffProfileSections sections={member.sections} classic />
+        </div>
+      );
+    }
+
     return (
       <div className="space-y-8 pb-2">
-        <ProfileSection icon={Sparkles} title="Profile Overview">
+        <ProfileSection icon={Sparkles} title="Profile Overview" {...sectionProps}>
           <p className="text-[15px] text-gray-600 leading-[1.75]">{member.bio}</p>
         </ProfileSection>
 
+        {member.education && (
+          <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-2 max-w-xl">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-4 h-4 text-orange-500 shrink-0" />
+              <h4 className="text-sm font-bold text-gray-900">Education</h4>
+            </div>
+            <p className="text-sm font-semibold text-gray-900 leading-snug">{member.education.degree}</p>
+            <p className="text-sm text-gray-500">{member.education.institution}</p>
+          </div>
+        )}
+
+        {member.experience?.companies && member.experience.companies.length > 0 && (
+          <ProfileSection icon={Briefcase} title="Experience" {...sectionProps}>
+            <StaffExperienceTimeline companies={member.experience.companies} />
+          </ProfileSection>
+        )}
+
+        {member.experience?.current && !member.experience.companies?.length && (
+          <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-3 max-w-xl">
+            <div className="flex items-center gap-2">
+              <Briefcase className="w-4 h-4 text-orange-500 shrink-0" />
+              <h4 className="text-sm font-bold text-gray-900">Experience</h4>
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">{member.experience.current}</p>
+            {(member.experience.previous?.length ?? 0) > 0 && (
+              <ul className="space-y-1.5 border-t border-gray-100 pt-3">
+                {member.experience.previous!.map((role) => (
+                  <li key={role} className="text-xs text-gray-500 leading-snug">
+                    {role}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {member.expertise && member.expertise.length > 0 && (
+          <ProfileSection icon={Mic2} title="Key Expertise" {...sectionProps}>
+            <div className="flex flex-wrap gap-2">
+              {member.expertise.map((item) => (
+                <span
+                  key={item}
+                  className="text-xs font-medium text-gray-700 bg-white border border-gray-200/90 px-3 py-1.5 rounded-full shadow-sm"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </ProfileSection>
+        )}
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {(member.featuredHighlight || (member.highlights && member.highlights.length > 0)) && (
+            <ProfileSection icon={Trophy} title="Highlights" {...sectionProps}>
+              <StaffHighlightsList
+                featuredHighlight={member.featuredHighlight}
+                highlights={member.highlights}
+              />
+            </ProfileSection>
+          )}
+
+          {member.approach && member.approach.length > 0 && (
+            <ProfileSection icon={Sparkles} title="Training Approach" {...sectionProps}>
+              <ul className="space-y-2.5">
+                {member.approach.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-sm text-gray-600 leading-snug">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-orange-400" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </ProfileSection>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  if (member.sections && member.sections.length > 0) {
+    return (
+      <div className="space-y-0 lg:space-y-8 pb-2">
+        <ProfileSection icon={Sparkles} title="Profile Overview" {...sectionProps}>
+          <p className="text-sm lg:text-[15px] text-gray-600 leading-relaxed lg:leading-[1.75]">{member.bio}</p>
+        </ProfileSection>
+
         {(member.featuredHighlight || (member.highlights && member.highlights.length > 0)) && (
-          <ProfileSection icon={Trophy} title="At a Glance">
+          <ProfileSection icon={Trophy} title="At a Glance" {...sectionProps}>
             <StaffHighlightsList
               featuredHighlight={member.featuredHighlight}
               highlights={member.highlights}
@@ -498,13 +692,19 @@ function StaffProfileContent({ member }: { member: StaffMember }) {
   }
 
   return (
-    <div className="space-y-8 pb-2">
-      <ProfileSection icon={Sparkles} title="Profile Overview">
-        <p className="text-[15px] text-gray-600 leading-[1.75]">{member.bio}</p>
+    <div className="space-y-0 lg:space-y-8 pb-2">
+      <ProfileSection icon={Sparkles} title="Profile Overview" {...sectionProps}>
+        <p className="text-sm lg:text-[15px] text-gray-600 leading-relaxed lg:leading-[1.75]">{member.bio}</p>
       </ProfileSection>
 
       {member.education && (
-        <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-2 max-w-xl">
+        <div
+          className={cn(
+            plainOnMobile
+              ? 'pb-6 border-b border-gray-100 pl-10'
+              : 'rounded-xl border border-gray-100 bg-white p-4 shadow-sm lg:rounded-2xl lg:max-w-xl lg:shadow-none lg:bg-gradient-to-br lg:from-gray-50 lg:to-white lg:p-5 space-y-2'
+          )}
+        >
           <div className="flex items-center gap-2">
             <GraduationCap className="w-4 h-4 text-orange-500 shrink-0" />
             <h4 className="text-sm font-bold text-gray-900">Education</h4>
@@ -515,13 +715,19 @@ function StaffProfileContent({ member }: { member: StaffMember }) {
       )}
 
       {member.experience?.companies && member.experience.companies.length > 0 && (
-        <ProfileSection icon={Briefcase} title="Experience">
+        <ProfileSection icon={Briefcase} title="Experience" {...sectionProps}>
           <StaffExperienceTimeline companies={member.experience.companies} />
         </ProfileSection>
       )}
 
       {member.experience?.current && !member.experience.companies?.length && (
-        <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-3 max-w-xl">
+        <div
+          className={cn(
+            plainOnMobile
+              ? 'pb-6 border-b border-gray-100 pl-10 space-y-3'
+              : 'rounded-xl border border-gray-100 bg-white p-4 shadow-sm lg:rounded-2xl lg:max-w-xl lg:shadow-none lg:bg-gradient-to-br lg:from-gray-50 lg:to-white lg:p-5 space-y-3'
+          )}
+        >
           <div className="flex items-center gap-2">
             <Briefcase className="w-4 h-4 text-orange-500 shrink-0" />
             <h4 className="text-sm font-bold text-gray-900">Experience</h4>
@@ -540,7 +746,7 @@ function StaffProfileContent({ member }: { member: StaffMember }) {
       )}
 
       {member.expertise && member.expertise.length > 0 && (
-        <ProfileSection icon={Mic2} title="Key Expertise">
+        <ProfileSection icon={Mic2} title="Key Expertise" {...sectionProps}>
           <div className="flex flex-wrap gap-2">
             {member.expertise.map((item) => (
               <span
@@ -554,9 +760,9 @@ function StaffProfileContent({ member }: { member: StaffMember }) {
         </ProfileSection>
       )}
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className={cn(plainOnMobile ? 'space-y-0' : 'grid lg:grid-cols-2 gap-5 lg:gap-8')}>
         {(member.featuredHighlight || (member.highlights && member.highlights.length > 0)) && (
-          <ProfileSection icon={Trophy} title="Highlights">
+          <ProfileSection icon={Trophy} title="Highlights" {...sectionProps}>
             <StaffHighlightsList
               featuredHighlight={member.featuredHighlight}
               highlights={member.highlights}
@@ -565,7 +771,7 @@ function StaffProfileContent({ member }: { member: StaffMember }) {
         )}
 
         {member.approach && member.approach.length > 0 && (
-          <ProfileSection icon={Sparkles} title="Training Approach">
+          <ProfileSection icon={Sparkles} title="Training Approach" {...sectionProps}>
             <ul className="space-y-2.5">
               {member.approach.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-gray-600 leading-snug">
@@ -603,7 +809,7 @@ function StaffProfileModal({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center sm:p-5 md:p-8"
+      className="fixed inset-0 z-[200] flex lg:items-center lg:justify-center lg:p-6 xl:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -612,31 +818,87 @@ function StaffProfileModal({
       <button
         type="button"
         aria-label="Close profile"
-        className="absolute inset-0 bg-gray-900/45 backdrop-blur-[6px]"
+        className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm lg:bg-gray-900/45 lg:backdrop-blur-[6px]"
         onClick={onClose}
       />
 
+      {/* Mobile: full-screen slide-in */}
       <motion.div
         role="dialog"
         aria-modal="true"
         aria-labelledby="staff-profile-title"
+        initial={{ opacity: 0, x: '100%' }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: '100%' }}
+        transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+        className="relative z-10 flex h-[100dvh] w-full flex-col bg-white lg:hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex h-full flex-col">
+          <header className="shrink-0 flex items-center gap-3 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 border-b border-gray-100 bg-white">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-700 active:bg-gray-200 shrink-0"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="min-w-0 flex-1">
+              <p id="staff-profile-title" className="font-semibold text-gray-900 truncate text-[15px]">
+                {member.name}
+              </p>
+              <p className="text-xs text-orange-600 truncate">{member.role}</p>
+            </div>
+          </header>
+
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain modal-scroll bg-[#fafafa]">
+            <div className="bg-white px-4 pt-6 pb-5 text-center border-b border-gray-100">
+              <div className="mx-auto w-[120px] aspect-square rounded-2xl overflow-hidden ring-2 ring-gray-100 shadow-md mb-4">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
+              <p className="mt-1 text-sm text-orange-600 font-medium leading-snug px-2">{member.role}</p>
+              {member.linkedin && (
+                <div className="mt-4 max-w-xs mx-auto">
+                  <StaffLinkedInLink url={member.linkedin} variant="modal" />
+                </div>
+              )}
+            </div>
+
+            <div className="px-4 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+              <StaffProfileContent member={member} plainOnMobile />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Desktop: centered popup (original) */}
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="staff-profile-title-desktop"
         initial={{ opacity: 0, y: 48 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 32 }}
         transition={{ duration: 0.4, ease }}
         className={cn(
-          'relative z-10 flex w-full flex-col min-h-0 max-h-[94dvh] sm:max-h-[90dvh] rounded-t-[1.75rem] sm:rounded-[1.75rem] bg-white shadow-[0_32px_80px_-20px_rgba(0,0,0,0.35)] ring-1 ring-black/[0.06] overflow-hidden',
+          'relative z-10 hidden lg:flex w-full flex-col min-h-0 max-h-[90dvh] rounded-[1.75rem] bg-white',
+          'shadow-[0_32px_80px_-20px_rgba(0,0,0,0.35)] ring-1 ring-black/[0.06] overflow-hidden',
           member.sections?.length ? 'max-w-6xl' : 'max-w-5xl'
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-gray-100/90 bg-white px-5 py-4 sm:px-6">
+        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-gray-100/90 bg-white px-6 py-4">
           <div className="min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-orange-500 mb-1">
               Faculty Profile
             </p>
-            <p id="staff-profile-title" className="font-serif text-lg sm:text-xl text-gray-900 truncate">
+            <p id="staff-profile-title-desktop" className="font-serif text-xl text-gray-900 truncate">
               {member.name}
             </p>
           </div>
@@ -650,34 +912,28 @@ function StaffProfileModal({
           </button>
         </div>
 
-        {/* Scrollable body */}
         <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain modal-scroll">
-          <div className="lg:grid lg:grid-cols-[minmax(240px,280px)_1fr] lg:items-start">
-            {/* Photo + identity — sticky on desktop */}
-            <aside className="lg:sticky lg:top-0 border-b lg:border-b-0 lg:border-r border-gray-100 bg-[#fafafa] p-5 sm:p-6 lg:p-8">
+          <div className="grid grid-cols-[minmax(240px,280px)_1fr] items-start">
+            <aside className="sticky top-0 border-r border-gray-100 bg-[#fafafa] p-8">
               <StaffPhoto
                 member={member}
                 variant="modal"
-                className="aspect-[4/5] w-full max-w-[240px] mx-auto lg:max-w-none"
+                className="aspect-[4/5] w-full"
               />
-              <div className="mt-5 space-y-2 text-center lg:text-left">
+              <div className="mt-5 space-y-2">
                 <h3 className="text-xl font-bold tracking-tight text-gray-900 leading-snug">
                   {member.name}
                 </h3>
-                <p className="text-sm font-medium text-orange-600 leading-relaxed">
-                  {member.role}
-                </p>
+                <p className="text-sm font-medium text-orange-600 leading-relaxed">{member.role}</p>
                 {member.linkedin && (
-                  <div className="mt-4 max-w-[220px] mx-auto lg:mx-0">
+                  <div className="mt-4">
                     <StaffLinkedInLink url={member.linkedin} variant="modal" />
                   </div>
                 )}
               </div>
             </aside>
-
-            {/* Profile details */}
-            <div className="p-5 sm:p-6 lg:p-8 lg:pt-8">
-              <StaffProfileContent member={member} />
+            <div className="p-8">
+              <StaffProfileContent member={member} classic />
             </div>
           </div>
         </div>
@@ -700,28 +956,57 @@ function StaffPreviewCard({
 
   return (
     <motion.article
-      initial={{ opacity: 0, scale: 0.95, y: 30 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ delay: index * 0.1, duration: 0.75, ease }}
-      className="group flex h-full flex-col gap-6"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay: index * 0.08, duration: 0.55, ease }}
+      className="group flex h-full flex-col"
     >
-      <StaffPhoto member={member} variant="preview" className="aspect-square w-full shrink-0" />
-
-      <div className="flex flex-1 flex-col gap-4 min-h-0">
-        <div className="space-y-2">
-          <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-snug">{member.name}</h3>
-          <p className="text-xs font-semibold uppercase tracking-widest text-orange-500 leading-snug">
-            {member.role}
-          </p>
-          <p className="text-gray-500 leading-relaxed text-sm line-clamp-4">{previewText}</p>
-        </div>
-
-        <StaffCardActions
-          linkedin={member.linkedin}
-          showViewProfile={showProfileButton}
-          onViewProfile={onViewProfile}
+      {/* Mobile */}
+      <div className="flex flex-col overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm md:hidden">
+        <StaffPhoto
+          member={member}
+          variant="preview"
+          className="aspect-[5/4] w-full rounded-none border-0 shadow-none"
         />
+        <div className="flex flex-1 flex-col p-4">
+          <div className="space-y-1.5 mb-3">
+            <h3 className="text-lg font-bold text-gray-900 leading-tight">{member.name}</h3>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-orange-500 leading-snug">
+              {member.role}
+            </p>
+          </div>
+          <p className="text-[13px] text-gray-500 leading-relaxed line-clamp-3 mb-4">{previewText}</p>
+          <StaffCardActions
+            linkedin={member.linkedin}
+            showViewProfile={showProfileButton}
+            onViewProfile={onViewProfile}
+            compact
+          />
+        </div>
+      </div>
+
+      {/* Desktop — original layout */}
+      <div className="hidden md:flex md:flex-col md:gap-6 h-full">
+        <StaffPhoto
+          member={member}
+          variant="preview"
+          className="aspect-square w-full rounded-[3rem] border border-gray-100 shadow-sm"
+        />
+        <div className="flex flex-1 flex-col gap-4 min-h-0">
+          <div className="space-y-2">
+            <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-snug">{member.name}</h3>
+            <p className="text-xs font-semibold uppercase tracking-widest text-orange-500 leading-snug">
+              {member.role}
+            </p>
+            <p className="text-gray-500 leading-relaxed text-sm line-clamp-4">{previewText}</p>
+          </div>
+          <StaffCardActions
+            linkedin={member.linkedin}
+            showViewProfile={showProfileButton}
+            onViewProfile={onViewProfile}
+          />
+        </div>
       </div>
     </motion.article>
   );
@@ -731,32 +1016,19 @@ export default function Staff() {
   const [activeProfile, setActiveProfile] = useState<StaffMember | null>(null);
 
   return (
-    <section id="team" className="py-24 px-6 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-16 relative">
-        <div className="absolute top-0 right-0 text-[10rem] font-bold text-gray-50 leading-none select-none -translate-y-1/4 translate-x-1/4 pointer-events-none">
+    <section id="team" className="py-14 sm:py-16 md:py-24 px-4 sm:px-6 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12 md:space-y-16 relative">
+        <div className="absolute top-0 right-0 text-[5rem] md:text-[10rem] font-bold text-gray-50 leading-none select-none -translate-y-1/4 translate-x-1/4 pointer-events-none hidden md:block">
           FACULTY
         </div>
 
-        <div className="space-y-4 relative">
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-xs font-bold uppercase tracking-[0.3em] text-gray-400"
-          >
-            Experts
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl font-bold tracking-tight text-gray-900"
-          >
-            Meet our Team
-          </motion.h2>
-        </div>
+        <SectionHeader
+          label="Experts"
+          title="Meet our Team"
+          description="Industry practitioners and mentors guiding you from fundamentals to career-ready confidence."
+        />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 relative items-stretch">
+        <div className="flex flex-col gap-5 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:gap-10 relative items-stretch">
           {STAFF.map((member, i) => (
             <StaffPreviewCard
               key={member.id}

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
-import { Target, Zap, Shield, Globe } from 'lucide-react';
+import { Target, Zap, Shield, Globe, ArrowRight } from 'lucide-react';
 import { BRAND_NAME, BRAND_TAGLINE } from '../constants.ts';
+import SectionHeader from './SectionHeader.tsx';
 
 const features = [
   {
@@ -31,55 +32,52 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-14 sm:py-16 md:py-24 px-4 sm:px-6 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500"
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          <div className="space-y-5 sm:space-y-6 lg:sticky lg:top-28">
+            <SectionHeader
+              label={`Why ${BRAND_NAME}`}
+              title={
+                <>
+                  {BRAND_TAGLINE.split('.')[0]}.{' '}
+                  <span className="italic text-gray-400">{BRAND_TAGLINE.split('.')[1]?.trim()}.</span>
+                </>
+              }
+              description="A training experience built around outcomes — mentorship, projects, and the skills hiring managers actually look for."
+            />
+            <a
+              href="#courses"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-orange-600 transition-colors"
             >
-              Why {BRAND_NAME}
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-6xl font-bold tracking-tight text-black leading-[1.1]"
-            >
-              {BRAND_TAGLINE.split('.')[0]}. <br />
-              <span className="text-gray-300">{BRAND_TAGLINE.split('.')[1]?.trim()}.</span>
-            </motion.h2>
-            <p className="text-lg text-gray-500 max-w-md leading-relaxed">
-              A training experience built around outcomes — mentorship, projects, and the skills hiring
-              managers actually look for.
-            </p>
-            <div className="pt-4">
-              <button className="text-sm font-bold border-b-2 border-black pb-1 hover:text-orange-500 hover:border-orange-500 transition-all">
-                Explore our programs
-              </button>
-            </div>
+              Explore our programs
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-8">
+          <div className="space-y-3 sm:space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
             {features.map((feature, i) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{
-                  delay: i * 0.15,
-                  duration: 0.8,
+                  delay: i * 0.08,
+                  duration: 0.5,
                   ease: [0.16, 1, 0.3, 1]
                 }}
-                viewport={{ once: true, margin: '-50px' }}
-                className="p-8 rounded-[2rem] border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all group lg:odd:mt-8"
+                viewport={{ once: true, margin: '-40px' }}
+                className="flex gap-4 rounded-2xl border border-gray-100 bg-[#fafafa] p-4 sm:p-5 lg:flex-col lg:p-6 lg:bg-white lg:hover:border-gray-200 lg:hover:shadow-lg transition-all group lg:odd:mt-8"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-all">
-                  <feature.icon className="w-6 h-6" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white border border-gray-100 text-gray-900 shadow-sm group-hover:bg-gray-900 group-hover:text-white group-hover:border-gray-900 transition-all lg:h-12 lg:w-12 lg:rounded-2xl lg:mb-2">
+                  <feature.icon className="w-5 h-5 lg:w-6 lg:h-6" />
                 </div>
-                <h3 className="text-lg font-bold text-black mb-3">{feature.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1 sm:mb-2 leading-snug">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>

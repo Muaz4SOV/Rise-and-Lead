@@ -27,18 +27,18 @@ const values = [
 
 export default function About({ onEnrollClick }: { onEnrollClick: () => void }) {
   return (
-    <section id="about" className="py-32 px-6 bg-[#0a0a0a] text-white overflow-hidden relative">
+    <section id="about" className="py-16 sm:py-20 md:py-32 px-4 sm:px-6 bg-[#0a0a0a] text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
-          <div className="space-y-12">
-            <div className="space-y-4">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-24 items-center">
+          <div className="space-y-8 sm:space-y-12">
+            <div className="space-y-3 sm:space-y-4">
               <motion.p
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="text-xs font-bold uppercase tracking-[0.4em] text-orange-500"
+                className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.28em] sm:tracking-[0.4em] text-orange-500"
               >
                 Your Career Path
               </motion.p>
@@ -46,9 +46,9 @@ export default function About({ onEnrollClick }: { onEnrollClick: () => void }) 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-5xl md:text-6xl font-bold tracking-tighter leading-[1.05] text-white"
+                className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.12] sm:leading-[1.05] text-white"
               >
-                Train for roles <br />
+                Train for roles <br className="hidden sm:block" />
                 <span className="text-gray-500">the industry hires.</span>
               </motion.h2>
             </div>
@@ -57,38 +57,38 @@ export default function About({ onEnrollClick }: { onEnrollClick: () => void }) 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-gray-400 leading-relaxed max-w-lg"
+              className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-lg"
             >
               {BRAND_CAREERS}
             </motion.p>
 
-            <div className="grid sm:grid-cols-2 gap-6 pt-8 border-t border-white/10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 pt-6 sm:pt-8 border-t border-white/10">
               {values.map((value, i) => (
                 <motion.div
                   key={value.label}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + i * 0.08 }}
-                  className="flex gap-4 items-start group"
+                  className="flex gap-3.5 sm:gap-4 items-start group rounded-2xl sm:rounded-none border border-white/5 sm:border-0 bg-white/[0.02] sm:bg-transparent p-4 sm:p-0"
                 >
-                  <div className="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
-                    <value.icon className="w-5 h-5" />
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
+                    <value.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div className="space-y-1">
+                  <div className="space-y-1 min-w-0">
                     <h4 className="font-bold text-white tracking-tight text-sm">{value.label}</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">{value.text}</p>
+                    <p className="text-[13px] sm:text-sm text-gray-500 leading-relaxed">{value.text}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative hidden lg:block w-full max-w-md mx-auto lg:max-w-none lg:mx-0">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="aspect-square rounded-[4rem] overflow-hidden relative z-10 border border-white/10 shadow-2xl"
+              className="aspect-[4/3] sm:aspect-square rounded-2xl sm:rounded-[4rem] overflow-hidden relative z-10 border border-white/10 shadow-2xl"
             >
               <img
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop"
@@ -97,25 +97,25 @@ export default function About({ onEnrollClick }: { onEnrollClick: () => void }) 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
 
-              <div className="absolute bottom-10 left-10 right-10 space-y-3">
-                <p className="text-sm text-white/90 leading-relaxed font-serif italic max-w-sm">
+              <div className="absolute bottom-4 left-4 right-4 sm:bottom-10 sm:left-10 sm:right-10 space-y-2 sm:space-y-3">
+                <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-serif italic line-clamp-3 sm:line-clamp-none sm:max-w-sm">
                   Excellence reflects the curated choice of mastery over mediocrity.
                 </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-px bg-orange-500 shrink-0" />
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-orange-500">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
+                  <div className="w-8 sm:w-10 h-px bg-orange-500 shrink-0" />
+                  <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.18em] sm:tracking-widest text-orange-500 leading-snug sm:leading-relaxed">
                     Hands-on · Mentor-led · Industry-aligned
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            <div className="absolute -top-12 -right-12 w-full h-full border border-white/5 rounded-[4rem] -z-10 translate-x-4 translate-y-4" />
+            <div className="absolute -top-12 -right-12 w-full h-full border border-white/5 rounded-[4rem] -z-10 translate-x-4 translate-y-4 hidden sm:block" />
 
             <motion.div
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              className="absolute -top-6 -right-6 w-32 h-32 border-4 border-dashed border-white/10 rounded-full"
+              className="absolute -top-6 -right-6 w-32 h-32 border-4 border-dashed border-white/10 rounded-full hidden sm:block"
             />
           </div>
         </div>
@@ -123,10 +123,10 @@ export default function About({ onEnrollClick }: { onEnrollClick: () => void }) 
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mt-32 p-12 rounded-[3.5rem] bg-white text-black flex flex-col md:flex-row items-center justify-between gap-12"
+          className="mt-16 sm:mt-24 lg:mt-32 p-6 sm:p-10 md:p-12 rounded-3xl sm:rounded-[3.5rem] bg-white text-black flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12"
         >
-          <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-4xl font-bold tracking-tight">Ready to rise beyond limits?</h3>
+          <div className="space-y-3 sm:space-y-4 text-center md:text-left">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Ready to rise beyond limits?</h3>
             <p className="text-gray-500 font-medium">
               Join the next cohort and turn your potential into a thriving tech career.
             </p>
@@ -134,7 +134,7 @@ export default function About({ onEnrollClick }: { onEnrollClick: () => void }) 
           <button
             type="button"
             onClick={onEnrollClick}
-            className="group bg-black text-white px-10 py-5 rounded-[2rem] font-bold flex items-center gap-3 hover:bg-gray-800 transition-all active:scale-95 shadow-xl shadow-black/10 shrink-0"
+            className="group w-full md:w-auto bg-black text-white px-8 sm:px-10 py-4 sm:py-5 rounded-[1.75rem] sm:rounded-[2rem] font-bold flex items-center justify-center gap-3 hover:bg-gray-800 transition-all active:scale-95 shadow-xl shadow-black/10 shrink-0"
           >
             Apply for Admission
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

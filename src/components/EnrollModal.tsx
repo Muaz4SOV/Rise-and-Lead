@@ -174,7 +174,7 @@ export default function EnrollModal({ open, onClose }: EnrollModalProps) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -195,10 +195,10 @@ export default function EnrollModal({ open, onClose }: EnrollModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98, y: 8 }}
             transition={{ duration: 0.3, ease }}
-            className="relative z-10 flex w-full max-w-lg max-h-[min(90dvh,720px)] flex-col overflow-hidden rounded-2xl bg-white shadow-[0_24px_64px_-12px_rgba(0,0,0,0.28)] ring-1 ring-black/[0.05]"
+            className="relative z-10 flex w-full max-w-lg max-h-[92dvh] sm:max-h-[min(90dvh,720px)] flex-col overflow-hidden rounded-t-2xl sm:rounded-2xl bg-white shadow-[0_24px_64px_-12px_rgba(0,0,0,0.28)] ring-1 ring-black/[0.05]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative shrink-0 border-b border-gray-100 px-6 py-5">
+            <div className="relative shrink-0 border-b border-gray-100 px-4 py-4 sm:px-6 sm:py-5">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-amber-400" />
               <div className="flex items-start justify-between gap-4 pt-1">
                 <div className="min-w-0">
@@ -221,7 +221,7 @@ export default function EnrollModal({ open, onClose }: EnrollModalProps) {
               </div>
             </div>
 
-            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain modal-scroll px-6 py-5">
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain modal-scroll px-4 py-4 sm:px-6 sm:py-5 pb-[max(1rem,env(safe-area-inset-bottom))]">
               <AnimatePresence mode="wait" initial={false}>
                 {step === 'choice' ? (
                   <motion.div

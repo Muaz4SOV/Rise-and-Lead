@@ -27,7 +27,7 @@ export default function App() {
   });
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-black z-[100] origin-left"
