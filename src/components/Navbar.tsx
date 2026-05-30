@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, BookOpen } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 import BrandName from './BrandName';
+import BrandLogo from './BrandLogo';
 
 export default function Navbar({ onEnrollClick }: { onEnrollClick: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,16 +39,15 @@ export default function Navbar({ onEnrollClick }: { onEnrollClick: () => void })
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <motion.div 
+        <motion.a
+          href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2.5 sm:gap-3"
         >
-          <div className="bg-black p-2 rounded-lg">
-            <BookOpen className="w-5 h-5 text-white" />
-          </div>
+          <BrandLogo />
           <BrandName className="text-base sm:text-xl text-black" />
-        </motion.div>
+        </motion.a>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">

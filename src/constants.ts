@@ -4,7 +4,58 @@ export const BRAND_NAME = 'Rise & Lead 360';
 export const BRAND_TAGLINE = 'Learn Today. Build Tomorrow.';
 export const BRAND_TAGLINE_PARTS = ['Learn Today', 'Build Tomorrow'] as const;
 export const BRAND_MISSION =
-  'Just listen to your soul and unlock your true potential with Rise & Lead 360 — where passion meets purpose, skills meet growth, and leaders are empowered to rise beyond limits.';
+  'Our mission is to inspire, educate, and lead people toward success through innovation, knowledge, and impactful experiences.';
+
+export const ABOUT_INTRO =
+  'Rise & Lead 360 is a professional development platform dedicated to empowering individuals, teams, and organizations through structured learning, digital innovation, and high-impact media services.';
+
+export const ABOUT_COMMITMENT =
+  'We are committed to developing future leaders, confident communicators, and industry-ready professionals across every program we deliver.';
+
+export const ABOUT_SPECIALIZATIONS =
+  'Our portfolio spans professional certifications, executive training, podcast production, web development, and mobile application development — tailored for individuals, startups, corporates, and industry partners.';
+
+export const ABOUT_CLOSING =
+  'We combine practical instruction, proven industry expertise, and modern digital solutions to help people and organizations perform with confidence in today\'s competitive landscape.';
+
+export const ABOUT_CAPABILITIES = [
+  {
+    title: 'Professional Certifications',
+    description: 'Accredited programs designed to validate skills and accelerate career progression.'
+  },
+  {
+    title: 'Executive Training',
+    description: 'Leadership and communication programs for senior teams and management cohorts.'
+  },
+  {
+    title: 'Podcast & Media Services',
+    description: 'End-to-end podcast production, hosting, and branded content development.'
+  },
+  {
+    title: 'Web Development',
+    description: 'Custom web solutions built for performance, scalability, and business outcomes.'
+  },
+  {
+    title: 'Mobile Applications',
+    description: 'Cross-platform mobile products from concept through deployment and support.'
+  }
+] as const;
+
+export const ABOUT_TRAINING_PORTFOLIO = [
+  'One-Day Professional Workshops',
+  '1-Month Fast Track Certifications & Diplomas',
+  'Corporate Training Programs',
+  'Leadership & Communication Development Sessions'
+] as const;
+
+export const ABOUT_LEARNING_PROGRAMS = [
+  'Communication Skills',
+  'Public Speaking',
+  'Leadership Development',
+  'Personal Branding',
+  'Corporate Training & Coaching',
+  'Professional Development'
+] as const;
 export const BRAND_HERO_HEADLINE = 'Just listen to your soul and unlock your true potential.';
 export const BRAND_HERO_SUBLINE =
   'Where passion meets purpose, skills meet growth, and leaders are empowered to rise beyond limits.';
@@ -13,8 +64,10 @@ export const BRAND_CAREERS =
 
 /** Update with your real contact details */
 export const CONTACT_EMAIL = 'info@riseandlead360.com';
-export const CONTACT_WHATSAPP = '923314511383';
-export const CONTACT_WHATSAPP_DISPLAY = '0331 4511383';
+export const CONTACT_WHATSAPP = '923350464757';
+export const CONTACT_WHATSAPP_DISPLAY = '0335-0464757';
+export const CONTACT_YOUTUBE = 'https://www.youtube.com/@riselead360';
+export const CONTACT_YOUTUBE_HANDLE = '@riselead360';
 export const WHATSAPP_ENROLL_MESSAGE = 'Hi, I want to enroll.';
 
 export const PORTFOLIO: PortfolioItem[] = [

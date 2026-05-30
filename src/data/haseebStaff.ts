@@ -200,6 +200,7 @@ export const HASEEB_STAFF: Staff = {
   bio:
     'Haseeb Khan is a versatile creative professional whose journey spans acting, education, training, hosting, radio, and content creation. With 28 years shaping minds at Pakistan\'s leading institutions and 25 years captivating audiences on stage and screen, he empowers individuals through communication, branding, leadership, and happiness — leaving a lasting impact on every platform he engages with.',
   image: haseebProfile,
+  profileImageFocus: 'center',
   sections: HASEEB_PROFILE_SECTIONS,
   highlights: [
     'Certified Trainer — Carnelian',

@@ -6,7 +6,7 @@ const careerPaths = ['Web Developer', 'Mobile App Dev', 'Freelancer', 'Software 
 
 export default function Hero() {
   return (
-    <section className="relative pt-28 pb-8 px-4 sm:pt-36 sm:pb-20 sm:px-6 bg-white lg:min-h-[88vh] flex items-center">
+    <section className="relative overflow-x-visible pt-28 pb-8 px-4 sm:pt-36 sm:pb-20 sm:px-6 bg-white lg:min-h-[88vh] flex items-center">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
         <div className="lg:col-span-7 space-y-6 sm:space-y-8 order-1">
           <motion.div
@@ -65,10 +65,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="lg:col-span-5 order-2 w-full lg:relative"
+          className="lg:col-span-5 order-2 w-full lg:relative lg:pl-3 lg:pb-3"
         >
-          <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-gray-100 bg-white shadow-lg shadow-gray-200/60 lg:shadow-lg lg:shadow-gray-200/80 lg:border-0 lg:bg-transparent lg:overflow-visible">
-            <div className="aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/5] lg:max-h-none overflow-hidden lg:rounded-3xl">
+          <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-gray-100 bg-white shadow-lg shadow-gray-200/60 lg:border-0 lg:bg-transparent lg:shadow-lg lg:shadow-gray-200/80 lg:overflow-visible">
+            <div className="aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/5] overflow-hidden lg:rounded-3xl">
               <img
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
                 alt="Rise & Lead 360 learning community"
@@ -76,15 +76,15 @@ export default function Hero() {
               />
             </div>
 
-            <div className="p-4 sm:p-5 border-t border-gray-100 lg:border-0 lg:p-0 lg:mt-0 lg:absolute lg:-bottom-3 lg:-left-3 lg:max-w-[250px] lg:rounded-xl lg:border lg:shadow-md lg:bg-white">
-              <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2.5">
+            <div className="border-t border-gray-100 p-4 sm:p-5 lg:absolute lg:-bottom-3 lg:-left-3 lg:mt-0 lg:max-w-[250px] lg:rounded-xl lg:border lg:border-gray-100 lg:bg-white lg:p-4 lg:shadow-md">
+              <p className="mb-2.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400 sm:text-[11px]">
                 Career paths
               </p>
               <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                 {careerPaths.map((path) => (
                   <span
                     key={path}
-                    className="text-xs font-medium text-gray-700 bg-gray-50 sm:bg-gray-100 px-2 py-2.5 sm:px-2.5 sm:py-2 rounded-lg text-center leading-snug min-h-[2.5rem] flex items-center justify-center"
+                    className="flex min-h-[2.5rem] items-center justify-center rounded-lg bg-gray-50 px-2 py-2.5 text-center text-xs font-medium leading-snug text-gray-700 sm:bg-gray-100 sm:px-2.5 sm:py-2"
                   >
                     {path}
                   </span>

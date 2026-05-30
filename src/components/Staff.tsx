@@ -139,18 +139,27 @@ function StaffHighlightsList({
   featuredHighlight,
   highlights
 }: {
-  featuredHighlight?: string;
+  featuredHighlight?: string | string[];
   highlights?: string[];
 }) {
-  if (!featuredHighlight && !highlights?.length) return null;
+  const featuredItems = featuredHighlight
+    ? Array.isArray(featuredHighlight)
+      ? featuredHighlight
+      : [featuredHighlight]
+    : [];
+
+  if (!featuredItems.length && !highlights?.length) return null;
 
   return (
     <div className="space-y-4">
-      {featuredHighlight && (
-        <div className="rounded-xl border border-orange-200 bg-orange-50/80 px-4 py-3.5">
-          <p className="text-sm font-semibold text-orange-900 leading-relaxed">{featuredHighlight}</p>
+      {featuredItems.map((item) => (
+        <div
+          key={item}
+          className="rounded-xl border border-orange-200 bg-orange-50/80 px-4 py-3.5"
+        >
+          <p className="text-sm font-semibold text-orange-900 leading-relaxed">{item}</p>
         </div>
-      )}
+      ))}
       {highlights && highlights.length > 0 && (
         <ul className="space-y-2.5">
           {highlights.map((item) => (
@@ -240,29 +249,42 @@ function StaffPhoto({
 }) {
   const isModal = variant === 'modal';
 
+  if (isModal) {
+    const focus = member.profileImageFocus ?? 'top';
+
+    return (
+      <div
+        className={cn(
+          'overflow-hidden rounded-2xl bg-gray-100 ring-1 ring-gray-200/80 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)]',
+          className
+        )}
+      >
+        <div className="aspect-[4/5] w-full">
+          <img
+            src={member.image}
+            alt={member.name}
+            className={cn('h-full w-full object-cover', imageFocusClass[focus])}
+            decoding="async"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={cn(
-        'relative overflow-hidden bg-gray-100',
-        isModal
-          ? 'rounded-2xl ring-1 ring-gray-200/80 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)]'
-          : 'group',
-        className
-      )}
-    >
+    <div className={cn('relative overflow-hidden bg-gray-100 group', className)}>
       <img
         src={member.image}
         alt={member.name}
-        className={cn(
-          'h-full w-full object-cover object-top',
-          isModal
-            ? 'grayscale-0'
-            : 'grayscale transition-all duration-700 group-hover:grayscale-0 scale-105 group-hover:scale-100'
-        )}
+        className="h-full w-full object-cover object-top grayscale transition-[filter] duration-700 group-hover:grayscale-0"
+        decoding="async"
       />
     </div>
   );
 }
+
+const educationBoxClass =
+  'rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-2 max-w-xl';
 
 function ProfileSection({
   icon: Icon,
@@ -270,7 +292,8 @@ function ProfileSection({
   children,
   className,
   plainOnMobile = false,
-  classic = false
+  classic = false,
+  contentVariant = 'default'
 }: {
   icon: typeof GraduationCap;
   title: string;
@@ -278,7 +301,10 @@ function ProfileSection({
   className?: string;
   plainOnMobile?: boolean;
   classic?: boolean;
+  contentVariant?: 'default' | 'highlight';
 }) {
+  const isHighlight = contentVariant === 'highlight';
+
   if (classic) {
     return (
       <section className={cn('space-y-3', className)}>
@@ -286,7 +312,7 @@ function ProfileSection({
           <Icon className="w-4 h-4 text-orange-500 shrink-0" />
           <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">{title}</h4>
         </div>
-        {children}
+        {isHighlight ? <div className={educationBoxClass}>{children}</div> : children}
       </section>
     );
   }
@@ -306,9 +332,17 @@ function ProfileSection({
         <h4 className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{title}</h4>
       </div>
       {plainOnMobile ? (
-        <div className="pl-10">{children}</div>
+        <div className="pl-10">
+          {isHighlight ? <div className={educationBoxClass}>{children}</div> : children}
+        </div>
       ) : (
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+        <div
+          className={cn(
+            isHighlight
+              ? educationBoxClass
+              : 'rounded-xl border border-gray-100 bg-white p-4 shadow-sm'
+          )}
+        >
           {children}
         </div>
       )}
@@ -356,18 +390,19 @@ function SectionImageGallery({
             <div
               key={`${title}-${i}`}
               className={cn(
-                'relative w-full overflow-hidden rounded-xl border border-gray-100 bg-gray-50 shadow-sm',
-                images.length === 1 ? 'aspect-[4/5] max-h-80' : aspectClass
+                'flex w-full items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-gray-50 shadow-sm',
+                images.length === 1 ? 'max-h-80' : aspectClass
               )}
             >
               <img
                 src={src}
                 alt={`${title} ${i + 1}`}
                 className={cn(
-                  'absolute inset-0 h-full w-full object-cover',
+                  'block max-h-full w-full h-auto object-contain',
                   imageFocusClass[focus]
                 )}
                 loading="lazy"
+                decoding="async"
               />
             </div>
           );
@@ -384,6 +419,7 @@ function SectionImageGallery({
           alt={title}
           className="block w-full h-auto max-h-64 sm:max-h-72 rounded-xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)] ring-1 ring-gray-200/60"
           loading="lazy"
+          decoding="async"
         />
       </figure>
     );
@@ -398,12 +434,16 @@ function SectionImageGallery({
       )}
     >
       {images.map((src, i) => (
-        <figure key={`${title}-${i}`} className="overflow-hidden rounded-xl shadow-sm ring-1 ring-gray-200/60">
+        <figure
+          key={`${title}-${i}`}
+          className="flex items-center justify-center overflow-hidden rounded-xl bg-gray-50 shadow-sm ring-1 ring-gray-200/60"
+        >
           <img
             src={src}
             alt={`${title} ${i + 1}`}
-            className="block w-full h-44 sm:h-48 object-cover"
+            className="block w-full h-auto max-h-44 sm:max-h-48 object-contain"
             loading="lazy"
+            decoding="async"
           />
         </figure>
       ))}
@@ -413,8 +453,7 @@ function SectionImageGallery({
 
 function FeaturedSectionImage({
   src,
-  alt,
-  focus = 'top'
+  alt
 }: {
   src: string;
   alt: string;
@@ -422,14 +461,13 @@ function FeaturedSectionImage({
 }) {
   return (
     <figure className="mt-4 md:mt-0 w-full max-w-sm md:max-w-none mx-auto md:mx-0 shrink-0">
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)] ring-1 ring-gray-200/60">
-        <img
-          src={src}
-          alt={alt}
-          className={cn('absolute inset-0 h-full w-full object-cover', imageFocusClass[focus])}
-          loading="lazy"
-        />
-      </div>
+      <img
+        src={src}
+        alt={alt}
+        className="block w-full h-auto max-h-64 sm:max-h-72 md:max-h-80 rounded-xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)] ring-1 ring-gray-200/60"
+        loading="lazy"
+        decoding="async"
+      />
     </figure>
   );
 }
@@ -593,14 +631,10 @@ function StaffProfileContent({
         </ProfileSection>
 
         {member.education && (
-          <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-2 max-w-xl">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-orange-500 shrink-0" />
-              <h4 className="text-sm font-bold text-gray-900">Education</h4>
-            </div>
+          <ProfileSection icon={GraduationCap} title="Education" contentVariant="highlight" {...sectionProps}>
             <p className="text-sm font-semibold text-gray-900 leading-snug">{member.education.degree}</p>
             <p className="text-sm text-gray-500">{member.education.institution}</p>
-          </div>
+          </ProfileSection>
         )}
 
         {member.experience?.companies && member.experience.companies.length > 0 && (
@@ -610,14 +644,10 @@ function StaffProfileContent({
         )}
 
         {member.experience?.current && !member.experience.companies?.length && (
-          <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-5 space-y-3 max-w-xl">
-            <div className="flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-orange-500 shrink-0" />
-              <h4 className="text-sm font-bold text-gray-900">Experience</h4>
-            </div>
+          <ProfileSection icon={Briefcase} title="Experience" {...sectionProps}>
             <p className="text-sm text-gray-700 leading-relaxed">{member.experience.current}</p>
             {(member.experience.previous?.length ?? 0) > 0 && (
-              <ul className="space-y-1.5 border-t border-gray-100 pt-3">
+              <ul className="space-y-1.5 border-t border-gray-100 pt-3 mt-3">
                 {member.experience.previous!.map((role) => (
                   <li key={role} className="text-xs text-gray-500 leading-snug">
                     {role}
@@ -625,7 +655,7 @@ function StaffProfileContent({
                 ))}
               </ul>
             )}
-          </div>
+          </ProfileSection>
         )}
 
         {member.expertise && member.expertise.length > 0 && (
@@ -698,20 +728,10 @@ function StaffProfileContent({
       </ProfileSection>
 
       {member.education && (
-        <div
-          className={cn(
-            plainOnMobile
-              ? 'pb-6 border-b border-gray-100 pl-10'
-              : 'rounded-xl border border-gray-100 bg-white p-4 shadow-sm lg:rounded-2xl lg:max-w-xl lg:shadow-none lg:bg-gradient-to-br lg:from-gray-50 lg:to-white lg:p-5 space-y-2'
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-4 h-4 text-orange-500 shrink-0" />
-            <h4 className="text-sm font-bold text-gray-900">Education</h4>
-          </div>
+        <ProfileSection icon={GraduationCap} title="Education" contentVariant="highlight" {...sectionProps}>
           <p className="text-sm font-semibold text-gray-900 leading-snug">{member.education.degree}</p>
           <p className="text-sm text-gray-500">{member.education.institution}</p>
-        </div>
+        </ProfileSection>
       )}
 
       {member.experience?.companies && member.experience.companies.length > 0 && (
@@ -721,20 +741,10 @@ function StaffProfileContent({
       )}
 
       {member.experience?.current && !member.experience.companies?.length && (
-        <div
-          className={cn(
-            plainOnMobile
-              ? 'pb-6 border-b border-gray-100 pl-10 space-y-3'
-              : 'rounded-xl border border-gray-100 bg-white p-4 shadow-sm lg:rounded-2xl lg:max-w-xl lg:shadow-none lg:bg-gradient-to-br lg:from-gray-50 lg:to-white lg:p-5 space-y-3'
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <Briefcase className="w-4 h-4 text-orange-500 shrink-0" />
-            <h4 className="text-sm font-bold text-gray-900">Experience</h4>
-          </div>
+        <ProfileSection icon={Briefcase} title="Experience" {...sectionProps}>
           <p className="text-sm text-gray-700 leading-relaxed">{member.experience.current}</p>
           {(member.experience.previous?.length ?? 0) > 0 && (
-            <ul className="space-y-1.5 border-t border-gray-100 pt-3">
+            <ul className="space-y-1.5 border-t border-gray-100 pt-3 mt-3">
               {member.experience.previous!.map((role) => (
                 <li key={role} className="text-xs text-gray-500 leading-snug">
                   {role}
@@ -742,7 +752,7 @@ function StaffProfileContent({
               ))}
             </ul>
           )}
-        </div>
+        </ProfileSection>
       )}
 
       {member.expertise && member.expertise.length > 0 && (
@@ -853,21 +863,21 @@ function StaffProfileModal({
           </header>
 
           <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain modal-scroll bg-[#fafafa]">
-            <div className="bg-white px-4 pt-6 pb-5 text-center border-b border-gray-100">
-              <div className="mx-auto w-[120px] aspect-square rounded-2xl overflow-hidden ring-2 ring-gray-100 shadow-md mb-4">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="h-full w-full object-cover object-top"
-                />
+            <div className="bg-white border-b border-gray-100">
+              <StaffPhoto
+                member={member}
+                variant="modal"
+                className="w-full rounded-none ring-0 shadow-none"
+              />
+              <div className="px-4 pt-5 pb-5 text-center">
+                <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
+                <p className="mt-1 text-sm text-orange-600 font-medium leading-snug px-2">{member.role}</p>
+                {member.linkedin && (
+                  <div className="mt-4 max-w-xs mx-auto">
+                    <StaffLinkedInLink url={member.linkedin} variant="modal" />
+                  </div>
+                )}
               </div>
-              <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-              <p className="mt-1 text-sm text-orange-600 font-medium leading-snug px-2">{member.role}</p>
-              {member.linkedin && (
-                <div className="mt-4 max-w-xs mx-auto">
-                  <StaffLinkedInLink url={member.linkedin} variant="modal" />
-                </div>
-              )}
             </div>
 
             <div className="px-4 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
@@ -915,11 +925,7 @@ function StaffProfileModal({
         <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain modal-scroll">
           <div className="grid grid-cols-[minmax(240px,280px)_1fr] items-start">
             <aside className="sticky top-0 border-r border-gray-100 bg-[#fafafa] p-8">
-              <StaffPhoto
-                member={member}
-                variant="modal"
-                className="aspect-[4/5] w-full"
-              />
+              <StaffPhoto member={member} variant="modal" className="w-full" />
               <div className="mt-5 space-y-2">
                 <h3 className="text-xl font-bold tracking-tight text-gray-900 leading-snug">
                   {member.name}

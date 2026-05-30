@@ -1,5 +1,5 @@
 import type { Staff } from '../types.ts';
-import muazProfile from '../assets/Muhammad Muaz profile Image.jpeg';
+import muazProfile from '../assets/Muhammad Muaz/Muhammad Muaz profile Image.jpeg';
 
 export const MUAZ_STAFF: Staff = {
   id: 'muhammad-muaz',

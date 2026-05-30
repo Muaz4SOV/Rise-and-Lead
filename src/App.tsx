@@ -17,14 +17,22 @@ import WhatsAppFloat from './components/WhatsAppFloat.tsx';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { useState } from 'react';
 
+type EnrollStep = 'choice' | 'whatsapp' | 'email' | 'success';
+
 export default function App() {
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
+  const [enrollInitialStep, setEnrollInitialStep] = useState<EnrollStep>('choice');
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
+
+  const openEnroll = (step: EnrollStep = 'choice') => {
+    setEnrollInitialStep(step);
+    setIsEnrollOpen(true);
+  };
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
@@ -34,12 +42,12 @@ export default function App() {
         style={{ scaleX }}
       />
 
-      <Navbar onEnrollClick={() => setIsEnrollOpen(true)} />
+      <Navbar onEnrollClick={() => openEnroll('choice')} />
       
       <main>
         <Hero />
         <Features />
-        <About onEnrollClick={() => setIsEnrollOpen(true)} />
+        <About onEnrollClick={() => openEnroll('choice')} />
         <Courses />
         <Portfolio />
         <Staff />
@@ -48,7 +56,11 @@ export default function App() {
 
       <Footer />
 
-      <EnrollModal open={isEnrollOpen} onClose={() => setIsEnrollOpen(false)} />
+      <EnrollModal
+        open={isEnrollOpen}
+        onClose={() => setIsEnrollOpen(false)}
+        initialStep={enrollInitialStep}
+      />
       <WhatsAppFloat />
     </div>
   );

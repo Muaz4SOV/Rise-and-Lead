@@ -26,6 +26,7 @@ type EnrollStep = 'choice' | 'whatsapp' | 'email' | 'success';
 interface EnrollModalProps {
   open: boolean;
   onClose: () => void;
+  initialStep?: EnrollStep;
 }
 
 function ProgramSelect({
@@ -110,8 +111,8 @@ function ProgramSelect({
   );
 }
 
-export default function EnrollModal({ open, onClose }: EnrollModalProps) {
-  const [step, setStep] = useState<EnrollStep>('choice');
+export default function EnrollModal({ open, onClose, initialStep = 'choice' }: EnrollModalProps) {
+  const [step, setStep] = useState<EnrollStep>(initialStep);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -133,6 +134,8 @@ export default function EnrollModal({ open, onClose }: EnrollModalProps) {
       return;
     }
 
+    setStep(initialStep);
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
@@ -143,7 +146,7 @@ export default function EnrollModal({ open, onClose }: EnrollModalProps) {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [open, onClose]);
+  }, [open, onClose, initialStep]);
 
   const handleWhatsApp = () => setStep('whatsapp');
 

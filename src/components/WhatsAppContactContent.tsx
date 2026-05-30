@@ -1,6 +1,7 @@
-import { MessageCircle, Clock, Sparkles } from 'lucide-react';
+import { Clock, Sparkles } from 'lucide-react';
 import { BRAND_NAME, CONTACT_WHATSAPP_DISPLAY, WHATSAPP_ENROLL_MESSAGE } from '../constants.ts';
 import { openWhatsAppChat } from '../lib/whatsapp.ts';
+import BrandLogo from './BrandLogo.tsx';
 
 export function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -28,10 +29,8 @@ export function WhatsAppContactContent({ onContinue }: { onContinue?: () => void
         <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/10" />
         <div className="absolute -bottom-8 -left-4 h-24 w-24 rounded-full bg-white/10" />
         <div className="relative flex items-center gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 ring-1 ring-white/30 backdrop-blur-sm">
-            <WhatsAppIcon className="h-8 w-8" />
-          </div>
-          <div className="min-w-0">
+          <BrandLogo className="h-14 w-14 rounded-2xl shadow-lg ring-2 ring-white/30" />
+          <div className="min-w-0 flex-1">
             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/80">WhatsApp Support</p>
             <p className="font-serif text-xl leading-tight truncate">{BRAND_NAME}</p>
             <p className="mt-1 flex items-center gap-1.5 text-xs text-white/90">
@@ -39,18 +38,23 @@ export function WhatsAppContactContent({ onContinue }: { onContinue?: () => void
               Available for inquiries
             </p>
           </div>
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/30">
+            <WhatsAppIcon className="h-6 w-6" />
+          </div>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-100 bg-[#f0fdf4]/60 p-4">
-        <div className="flex gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
-            <MessageCircle className="h-4 w-4" />
-          </div>
+      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-[#ece5dd] p-4">
+        <p className="mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+          Message preview
+        </p>
+        <div className="flex gap-2.5">
+          <BrandLogo className="h-9 w-9 shrink-0 rounded-full shadow-sm ring-1 ring-black/5" />
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold text-gray-500 mb-1.5">Your message preview</p>
-            <div className="rounded-2xl rounded-tl-md bg-white px-4 py-3 text-sm text-gray-700 shadow-sm ring-1 ring-gray-100 leading-relaxed">
+            <p className="mb-1 text-[11px] font-semibold text-gray-600">{BRAND_NAME}</p>
+            <div className="relative inline-block max-w-full rounded-2xl rounded-tl-md bg-white px-4 py-3 text-sm leading-relaxed text-gray-800 shadow-sm ring-1 ring-black/[0.04]">
               {WHATSAPP_ENROLL_MESSAGE}
+              <span className="mt-1.5 block text-right text-[10px] font-medium text-gray-400">Now</span>
             </div>
           </div>
         </div>

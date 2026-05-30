@@ -64,12 +64,13 @@ export interface Staff {
   bio: string;
   summary?: string;
   image: string;
+  profileImageFocus?: StaffImageFocus;
   linkedin?: string;
   titles?: string[];
   education?: StaffEducation;
   experience?: StaffExperience;
   expertise?: string[];
-  featuredHighlight?: string;
+  featuredHighlight?: string | string[];
   highlights?: string[];
   approach?: string[];
   sections?: StaffProfileSection[];

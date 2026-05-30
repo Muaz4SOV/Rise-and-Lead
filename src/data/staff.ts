@@ -1,7 +1,9 @@
 import { Staff } from '../types.ts';
-import qaswarProfile from '../assets/Qaswar Profile Image.jpeg';
+import qaswarProfile from '../assets/Ali Qaswar/Ali Qaswar.png';
 import { HASEEB_STAFF } from './haseebStaff.ts';
 import { MUAZ_STAFF } from './muazStaff.ts';
+import { MOIZ_STAFF } from './moizStaff.ts';
+import { BILAL_STAFF } from './bilalStaff.ts';
 
 export const STAFF: Staff[] = [
   {
@@ -54,5 +56,7 @@ export const STAFF: Staff[] = [
     ]
   },
   HASEEB_STAFF,
-  MUAZ_STAFF
+  MUAZ_STAFF,
+  MOIZ_STAFF,
+  BILAL_STAFF
 ];

@@ -1,6 +1,7 @@
-import { BookOpen, Instagram, Twitter, Linkedin, Github, ArrowUpRight } from 'lucide-react';
+import { Instagram, Twitter, Linkedin, Youtube, ArrowUpRight } from 'lucide-react';
 import BrandName from './BrandName';
-import { BRAND_TAGLINE, CONTACT_WHATSAPP_DISPLAY } from '../constants.ts';
+import BrandLogo from './BrandLogo';
+import { BRAND_TAGLINE, CONTACT_WHATSAPP_DISPLAY, CONTACT_YOUTUBE } from '../constants.ts';
 
 const navLinks = [
   { label: 'Courses', href: '#courses' },
@@ -17,10 +18,10 @@ const supportLinks = [
 ];
 
 const socialLinks = [
+  { icon: Youtube, label: 'YouTube', href: CONTACT_YOUTUBE },
   { icon: Instagram, label: 'Instagram', href: '#' },
   { icon: Twitter, label: 'Twitter', href: '#' },
-  { icon: Linkedin, label: 'LinkedIn', href: '#' },
-  { icon: Github, label: 'GitHub', href: '#' }
+  { icon: Linkedin, label: 'LinkedIn', href: '#' }
 ];
 
 function FooterLinkGroup({
@@ -54,15 +55,13 @@ export default function Footer() {
     <footer className="bg-[#0a0a0a] text-white">
       <div className="h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 lg:pt-20 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 lg:pt-20 pb-[calc(6.5rem+env(safe-area-inset-bottom))] sm:pb-12 lg:pb-12">
         {/* Mobile: stacked professional layout */}
         <div className="lg:hidden space-y-8">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-black shadow-lg shadow-white/5">
-                <BookOpen className="w-5 h-5" />
-              </div>
+              <BrandLogo className="h-11 w-11 ring-1 ring-white/10" />
               <div>
                 <BrandName className="text-lg text-white" />
                 <p className="text-[11px] font-medium text-orange-400 mt-0.5">{BRAND_TAGLINE}</p>
@@ -127,10 +126,8 @@ export default function Footer() {
         {/* Desktop */}
         <div className="hidden lg:grid lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6">
-            <div className="flex items-center gap-2">
-              <div className="bg-white p-2 rounded-lg">
-                <BookOpen className="w-5 h-5 text-black" />
-              </div>
+            <div className="flex items-center gap-2.5">
+              <BrandLogo className="h-10 w-10 ring-1 ring-white/10" />
               <BrandName className="text-xl text-white" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
