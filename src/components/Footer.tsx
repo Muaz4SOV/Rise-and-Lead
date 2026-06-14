@@ -1,7 +1,7 @@
 import { Instagram, Twitter, Linkedin, Youtube, ArrowUpRight } from 'lucide-react';
 import BrandName from './BrandName';
 import BrandLogo from './BrandLogo';
-import { BRAND_TAGLINE, CONTACT_WHATSAPP_DISPLAY, CONTACT_YOUTUBE } from '../constants.ts';
+import { BRAND_TAGLINE, CONTACT_EMAIL, CONTACT_WHATSAPP_DISPLAY, CONTACT_YOUTUBE } from '../constants.ts';
 
 const navLinks = [
   { label: 'Courses', href: '#courses' },
@@ -73,7 +73,11 @@ export default function Footer() {
           </div>
 
           <p className="text-center text-xs text-gray-500">
-            Call / WhatsApp:{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-gray-300 font-medium hover:text-white transition-colors">
+              {CONTACT_EMAIL}
+            </a>
+            <span className="mx-2 text-gray-600">·</span>
+            WhatsApp:{' '}
             <span className="text-gray-300 font-medium">{CONTACT_WHATSAPP_DISPLAY}</span>
           </p>
 
@@ -133,8 +137,13 @@ export default function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               Professional tech training for ambitious learners — from first skill to industry-ready confidence.
             </p>
-            <p className="text-sm text-gray-500">
-              WhatsApp: <span className="text-white font-medium">{CONTACT_WHATSAPP_DISPLAY}</span>
+            <p className="text-sm text-gray-500 space-y-1">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="block text-white font-medium hover:text-orange-300 transition-colors">
+                {CONTACT_EMAIL}
+              </a>
+              <span>
+                WhatsApp: <span className="text-white font-medium">{CONTACT_WHATSAPP_DISPLAY}</span>
+              </span>
             </p>
             <div className="flex gap-3">
               {socialLinks.map(({ icon: Icon, label, href }) => (

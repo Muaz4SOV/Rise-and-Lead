@@ -63,7 +63,7 @@ export const BRAND_CAREERS =
   'Whether you dream of becoming a Web Developer, Mobile App Developer, Freelancer, or Software Engineer — Rise & Lead 360 provides practical, career-focused training designed for the modern tech industry.';
 
 /** Update with your real contact details */
-export const CONTACT_EMAIL = 'info@riseandlead360.com';
+export const CONTACT_EMAIL = 'riselead360@gmail.com';
 export const CONTACT_WHATSAPP = '923350464757';
 export const CONTACT_WHATSAPP_DISPLAY = '0335-0464757';
 export const CONTACT_YOUTUBE = 'https://www.youtube.com/@riselead360';

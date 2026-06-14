@@ -4,9 +4,9 @@ import bilalProfile from '../assets/Bilal/Bilal Profile Image.jpeg';
 export const BILAL_STAFF: Staff = {
   id: 'muhammad-bilal-ashraf',
   name: 'Muhammad Bilal Ashraf',
-  role: 'Senior Software Engineer · PHP, Laravel & WordPress',
+  role: 'Trainer · Senior Software Engineer · PHP, Laravel & WordPress',
   linkedin: 'https://www.linkedin.com/in/muhammad-bilal-ashraf-51a839237/',
-  titles: ['Senior Software Engineer', 'PHP Developer', 'Laravel Developer', 'WordPress Developer'],
+  titles: ['Trainer', 'Senior Software Engineer', 'PHP Developer', 'Laravel Developer', 'WordPress Developer'],
   summary:
     'Experienced backend developer specializing in PHP, Laravel, and WordPress — integrating third-party APIs, building scalable solutions, and training learners in programming across professional and educational settings.',
   featuredHighlight: [

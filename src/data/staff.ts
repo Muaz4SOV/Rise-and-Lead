@@ -6,6 +6,8 @@ import { MOIZ_STAFF } from './moizStaff.ts';
 import { BILAL_STAFF } from './bilalStaff.ts';
 
 export const STAFF: Staff[] = [
+  HASEEB_STAFF,
+  MUAZ_STAFF,
   {
     id: 'ali-qaswar-khaleeq',
     name: 'Ali Qaswar Khaleeq',
@@ -55,8 +57,6 @@ export const STAFF: Staff[] = [
       'Focus on practical application and outcomes'
     ]
   },
-  HASEEB_STAFF,
-  MUAZ_STAFF,
-  MOIZ_STAFF,
-  BILAL_STAFF
+  BILAL_STAFF,
+  MOIZ_STAFF
 ];

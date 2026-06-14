@@ -4,8 +4,9 @@ import muazProfile from '../assets/Muhammad Muaz/Muhammad Muaz profile Image.jpe
 export const MUAZ_STAFF: Staff = {
   id: 'muhammad-muaz',
   name: 'Muhammad Muaz',
-  role: 'Senior Software Engineer · Technical Team Lead',
+  role: 'Trainer · Senior Software Engineer · Technical Team Lead',
   linkedin: 'https://www.linkedin.com/in/muhammad-muaz-77586a1a9/',
+  titles: ['Trainer', 'Senior Software Engineer', 'Technical Team Lead'],
   summary:
     'Senior Software Engineer and Technical Team Lead aspiring toward Solution Architecture — leading his team at TecSpine, delivering the best solutions across multiple projects, and training learners in programming across professional and educational settings.',
   featuredHighlight:

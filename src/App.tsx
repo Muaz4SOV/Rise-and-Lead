@@ -34,6 +34,11 @@ export default function App() {
     setIsEnrollOpen(true);
   };
 
+  const closeEnroll = () => {
+    setIsEnrollOpen(false);
+    setEnrollInitialStep('choice');
+  };
+
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* Progress Bar */}
@@ -45,7 +50,7 @@ export default function App() {
       <Navbar onEnrollClick={() => openEnroll('choice')} />
       
       <main>
-        <Hero />
+        <Hero onEnrollClick={() => openEnroll('email')} />
         <Features />
         <About onEnrollClick={() => openEnroll('choice')} />
         <Courses />
@@ -58,7 +63,7 @@ export default function App() {
 
       <EnrollModal
         open={isEnrollOpen}
-        onClose={() => setIsEnrollOpen(false)}
+        onClose={closeEnroll}
         initialStep={enrollInitialStep}
       />
       <WhatsAppFloat />

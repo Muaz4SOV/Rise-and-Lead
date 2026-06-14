@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Mail, ArrowLeft, Send, ChevronRight, ChevronDown, Check, CheckCircle2 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -121,9 +121,12 @@ export default function EnrollModal({ open, onClose, initialStep = 'choice' }: E
     message: ''
   });
 
+  useLayoutEffect(() => {
+    if (open) setStep(initialStep);
+  }, [open, initialStep]);
+
   useEffect(() => {
     if (!open) {
-      setStep('choice');
       setForm({
         name: '',
         email: '',
@@ -133,8 +136,6 @@ export default function EnrollModal({ open, onClose, initialStep = 'choice' }: E
       });
       return;
     }
-
-    setStep(initialStep);
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -146,7 +147,7 @@ export default function EnrollModal({ open, onClose, initialStep = 'choice' }: E
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [open, onClose, initialStep]);
+  }, [open, onClose]);
 
   const handleWhatsApp = () => setStep('whatsapp');
 

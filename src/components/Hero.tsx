@@ -4,7 +4,7 @@ import { BRAND_HERO_SUBLINE, BRAND_TAGLINE } from '../constants.ts';
 
 const careerPaths = ['Web Developer', 'Mobile App Dev', 'Freelancer', 'Software Engineer'];
 
-export default function Hero() {
+export default function Hero({ onEnrollClick }: { onEnrollClick: () => void }) {
   return (
     <section className="relative overflow-x-visible pt-28 pb-8 px-4 sm:pt-36 sm:pb-20 sm:px-6 bg-white lg:min-h-[88vh] flex items-center">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
@@ -48,7 +48,11 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-3 pt-1"
           >
-            <button className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-black text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors">
+            <button
+              type="button"
+              onClick={onEnrollClick}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-black text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors"
+            >
               Start Your Journey
               <ArrowRight className="w-4 h-4" />
             </button>
