@@ -5,7 +5,6 @@ import { BRAND_TAGLINE, CONTACT_EMAIL, CONTACT_WHATSAPP_DISPLAY, CONTACT_YOUTUBE
 
 const navLinks = [
   { label: 'Courses', href: '#courses' },
-  { label: 'Portfolio', href: '#portfolio' },
   { label: 'Team', href: '#team' },
   { label: 'About Us', href: '#about' }
 ];

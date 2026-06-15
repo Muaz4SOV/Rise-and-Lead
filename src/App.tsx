@@ -8,7 +8,6 @@ import Hero from './components/Hero.tsx';
 import Features from './components/Features.tsx';
 import Courses from './components/Courses.tsx';
 import About from './components/About.tsx';
-import Portfolio from './components/Portfolio.tsx';
 import Staff from './components/Staff.tsx';
 import Newsletter from './components/Newsletter.tsx';
 import Footer from './components/Footer.tsx';
@@ -54,7 +53,6 @@ export default function App() {
         <Features />
         <About onEnrollClick={() => openEnroll('choice')} />
         <Courses />
-        <Portfolio />
         <Staff />
         <Newsletter />
       </main>

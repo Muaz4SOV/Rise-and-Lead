@@ -24,7 +24,6 @@ export default function Navbar({ onEnrollClick }: { onEnrollClick: () => void })
 
   const navLinks = [
     { name: 'Courses', href: '#courses' },
-    { name: 'Portfolio', href: '#portfolio' },
     { name: 'Team', href: '#team' },
     { name: 'About', href: '#about' },
   ];

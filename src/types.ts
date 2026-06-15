@@ -1,4 +1,4 @@
-export type OfferingPillarId = 'hr' | 'film' | 'technology' | 'singing' | 'services';
+export type OfferingPillarId = 'hr' | 'film' | 'technology' | 'singing' | 'services' | 'islam360';
 
 export interface OfferingProgram {
   id: string;
@@ -12,6 +12,8 @@ export interface OfferingProgram {
 export interface OfferingPillar {
   id: OfferingPillarId;
   label: string;
+  subtitle?: string;
+  description?: string;
   programs: OfferingProgram[];
 }
 

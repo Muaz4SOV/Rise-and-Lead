@@ -212,5 +212,54 @@ export const OFFERING_PILLARS: OfferingPillar[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'islam360',
+    label: 'Islam 360',
+    subtitle: 'by Rise & Lead 360',
+    description:
+      'Islam 360 is a dedicated Islamic learning platform under Rise & Lead 360, committed to helping individuals and families strengthen their connection with the Holy Quran and Islamic teachings. Our mission is to make authentic Islamic education accessible worldwide through qualified instructors, interactive online classes, and personalized learning programs for children, youth, and adults.\n\nWhether you want to memorize the Quran, improve recitation, understand its meaning, or enhance your Islamic knowledge, Islam 360 provides a structured and supportive learning environment to help you grow spiritually and academically.',
+    programs: [
+      {
+        id: 'islam-hifz',
+        title: 'Online Hifz-ul-Quran Program',
+        duration: 'Online',
+        description:
+          'A structured memorization program designed for children and adults under the supervision of qualified Huffaz. Regular assessments and personalized progress tracking ensure effective Quran memorization.',
+        items: []
+      },
+      {
+        id: 'islam-tajweed',
+        title: 'Tajweed & Quran Recitation Classes',
+        duration: 'Online',
+        description:
+          'Learn the correct pronunciation and rules of Quran recitation. Our certified instructors help students improve fluency, confidence, and beauty in reciting the Holy Quran.',
+        items: []
+      },
+      {
+        id: 'islam-tafseer',
+        title: 'Quran Translation & Tafseer Course',
+        duration: 'Online',
+        description:
+          'Understand the message of Allah through comprehensive Quran translation and Tafseer classes. Learn the context, wisdom, and practical application of Quranic teachings in daily life.',
+        items: []
+      },
+      {
+        id: 'islam-studies',
+        title: 'Islamic Studies & Character Building',
+        duration: 'Online',
+        description:
+          'A complete Islamic learning program covering Aqeedah, Seerah of Prophet Muhammad ﷺ, Islamic manners, Duas, Fiqh basics, and moral development for children and adults.',
+        items: []
+      },
+      {
+        id: 'islam-nazra',
+        title: 'Nazra Quran for Kids & Beginners',
+        duration: 'Online',
+        description:
+          'A beginner-friendly course focused on Arabic letter recognition, pronunciation, and fluent Quran reading. Ideal for young learners and new students starting their Quranic journey.',
+        items: []
+      }
+    ]
   }
 ];

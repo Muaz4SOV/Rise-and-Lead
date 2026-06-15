@@ -6,6 +6,7 @@ import {
   Code2,
   Mic2,
   Briefcase,
+  BookOpen,
   Check,
   ChevronDown
 } from 'lucide-react';
@@ -19,7 +20,8 @@ const pillarIcons: Record<OfferingPillarId, typeof Users> = {
   film: Clapperboard,
   technology: Code2,
   singing: Mic2,
-  services: Briefcase
+  services: Briefcase,
+  islam360: BookOpen
 };
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -159,7 +161,7 @@ export default function Courses() {
               Programs built for <span className="italic text-gray-400">real careers.</span>
             </>
           }
-          description="Structured paths across five domains — workshops, certifications, and industry-ready skills."
+          description="Structured paths across six domains — workshops, certifications, Islamic learning, and industry-ready skills."
         />
 
         <motion.div
@@ -246,12 +248,33 @@ export default function Courses() {
                       <ActiveIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-base sm:text-xl font-bold text-gray-900">{pillar.label}</h3>
+                      <h3 className="text-base sm:text-xl font-bold text-gray-900">
+                        {pillar.label}
+                        {pillar.subtitle && (
+                          <span className="font-normal text-gray-500"> {pillar.subtitle}</span>
+                        )}
+                      </h3>
                       <p className="text-[11px] sm:text-sm text-gray-500 mt-0.5">
                         {pillar.programs.length} program{pillar.programs.length !== 1 ? 's' : ''} available
                       </p>
                     </div>
                   </motion.div>
+
+                  {pillar.description && (
+                    <motion.div
+                      variants={tabItemVariants}
+                      className="mb-4 sm:mb-6 rounded-xl border border-orange-100 bg-orange-50/50 px-4 py-4 sm:px-5 sm:py-5"
+                    >
+                      {pillar.description.split('\n\n').map((paragraph) => (
+                        <p
+                          key={paragraph.slice(0, 40)}
+                          className="text-sm text-gray-600 leading-relaxed [&+&]:mt-3"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                    </motion.div>
+                  )}
 
                   <div
                     className={cn(
